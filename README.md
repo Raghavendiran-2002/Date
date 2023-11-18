@@ -100,6 +100,18 @@ To get a local copy up and running follow these simple example steps.
 
 ## Usage
 
+View Console :
+
+```http
+http://localhost:3001
+```
+
+View CLI :
+
+```http
+http://localhost:3000
+```
+
 ## API Documentation
 
 ### Fetch Logs
@@ -150,7 +162,7 @@ POST /log-ingestor
 | :-------- | :----- | :------------ |
 | `body`    | `JSON` | **Required**. |
 
-####Body :
+#### Body :
 
 ```json
 {
