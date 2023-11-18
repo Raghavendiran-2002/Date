@@ -87,6 +87,12 @@ class DBManager:
         result = self.cursor.fetchall()
         return result
 
+    def search_spanId(self, traceId):
+        self.cursor.execute(
+            "SELECT * FROM log WHERE MATCH(spanId) AGAINST('{0}'); ".format(spanId))
+        result = self.cursor.fetchall()
+        return result
+
     def search_commit(self, commit):
         self.cursor.execute(
             "SELECT * FROM log WHERE MATCH(commit) AGAINST('{0}');".format(commit))

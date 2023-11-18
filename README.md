@@ -1,35 +1,7 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
-<a name="readme-top"></a>
-
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/dyte-submissions/november-2023-hiring-Raghavendiran-2002">
     <img src="https://cdn-icons-png.flaticon.com/512/2620/2620995.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -93,13 +65,16 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-- docker and docker-compose
+- Install Docker and Docker-compose
+
   ```
   curl -fsSL https://get.docker.com -o get-docker.sh
   ```
+
   ```
   sudo sh get-docker.sh
   ```
+
   ```
   sudo apt install docker-compose -y
   ```
@@ -108,7 +83,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/dyte-submissions/november-2023-hiring-Raghavendiran-2002
    ```
 2. Navigate to Project Directory
    ```
@@ -127,13 +102,29 @@ To get a local copy up and running follow these simple example steps.
 
 ## API Documentation
 
+### Fetch Logs
+
 ```http
 GET /query-interface?search=r&filter=level
 ```
 
-| Parameter | Type     | Description                        |
-| :-------- | :------- | :--------------------------------- |
-| `api_key` | `string` | **Required**. Your Gophish API key |
+| Parameter | Type     | Description   |
+| :-------- | :------- | :------------ |
+| `search`  | `string` | **Required**. |
+| `filter`  | `string` | **Required**. |
+
+**filter**
+
+- level
+- message
+- resourceId
+- traceId
+- spanId
+- commit
+- parentResourceId
+
+**search**
+"" search string
 
 ##### Responses
 
@@ -143,31 +134,6 @@ GET /query-interface?search=r&filter=level
   "status": 200
 }
 ```
-
-##### Status Codes
-
-Gophish returns the following status codes in its API:
-
-| Status Code | Description             |
-| :---------- | :---------------------- |
-| 200         | `OK`                    |
-| 201         | `CREATED`               |
-| 400         | `BAD REQUEST`           |
-| 404         | `NOT FOUND`             |
-| 500         | `INTERNAL SERVER ERROR` |
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./queryinterface.css";
 import LogTable from "./LogTable";
-import DatePicker from "react-datepicker";
 
 const options = [
   "level",
