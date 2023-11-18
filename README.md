@@ -114,6 +114,8 @@ http://localhost:3000
 
 ### Using CURL
 
+Fetch Logs
+
 ```curl
 curl -X GET http://localhost:3000/query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T08:00:00Z
 ```
@@ -121,6 +123,8 @@ curl -X GET http://localhost:3000/query-interface?filter=timestamp&start=2023-09
 ```
 curl -X GET http://localhost:3000/query-interface?search=12&filter=resourceId
 ```
+
+Post Logs
 
 ```
 curl -X POST http://localhost:3000/log-ingestor
@@ -152,7 +156,7 @@ GET /query-interface?search=r&filter=level
 | `search`  | `string` | **Required**. string to be search                                                                 |
 | `filter`  | `string` | **Required**. ["level","message", "resourceId", "traceId", "spanId", "commit","parentResourceId"] |
 
-### Responses
+Responses
 
 ```javascript
 {
@@ -171,7 +175,7 @@ GET /query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T
 | `end`     | `string` | **Required**. DateTime "2023-09-15T08:00:00Z" |
 | `filter`  | `string` | **Required**. ["timestamp"]                   |
 
-### Responses
+Responses
 
 ```javascript
 {
@@ -179,6 +183,8 @@ GET /query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T
   "status": 200
 }
 ```
+
+### Post Logs
 
 ```http
 POST /log-ingestor
