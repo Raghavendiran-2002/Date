@@ -80,7 +80,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 - [![React][React.js]][React-url]
 - [![NodeJS][Node-url]][Node.js]
-- [![Python][Python]][Python-url]
+- [![Python][Python-url]][Python]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
