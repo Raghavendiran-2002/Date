@@ -222,7 +222,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
-[Python-url]: https://img.shields.io/badge/Python-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Python-url]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python]: https://www.python.org/
-[Node-url]: https://img.shields.io/badge/Node-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Node-url]: https://img.shields.io/npm/v/npm.svg?logo=nodedotjs
 [Node.js]: https://nodejs.org/en/
