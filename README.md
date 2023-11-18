@@ -146,9 +146,9 @@ POST /log-ingestor
 
 ```
 
-| Parameter | Type   | Description      |
-| :-------- | :----- | :--------------- |
-| `body`    | `JSON` | **Required**. {{ |
+| Parameter | Type   | Description     |
+| :-------- | :----- | :-------------- |
+| `body`    | `JSON` | **Required**. { |
 
     "level": "error",
     "message": "Failed to connect to DB",
@@ -161,7 +161,7 @@ POST /log-ingestor
         "parentResourceId": "server-0987"
     }
 
-}} |
+}|
 
 ### Responses
 
