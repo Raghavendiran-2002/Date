@@ -7,9 +7,6 @@
 
 <h3 align="center">LoggerX</h3>
 
-  <p align="center">
-    LoggerX is a log management solution designed to seamlessly ingest, organize, and swiftly retrieve vast volumes of log data.
-  </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -43,8 +40,7 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+LoggerX is a log management solution designed to seamlessly ingest, organize, and swiftly retrieve vast volumes of log data.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
