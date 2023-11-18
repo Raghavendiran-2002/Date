@@ -1,4 +1,5 @@
 .container {
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,6 +7,7 @@
 }
 .searchcontiner{
   padding : 10px;
+
   border : 1px solid black;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -45,7 +47,24 @@ button:hover {
   transform:scale(1.02)
 }
 
-
+.head{
+  background-color: #F0F0F0;
+  height:45px;
+  display:flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  font-size: larger;
+  font-weight: 450;
+  top:0;
+  width:100%;
+}
+p{
+  color: black;
+}
+img{
+  max-width:40px;
+}
 
 .error-table {
   padding-top: 50px;

@@ -84,6 +84,11 @@ const QueryInterface = () => {
 
   return (
     <div className="container">
+      <div className="head">
+        <img src="https://cdn-icons-png.flaticon.com/512/2620/2620995.png"></img>
+        <p>LoggerX</p>
+      </div>
+
       <div className="searchcontiner">
         <form onSubmit={handleSubmit}>
           <select value={selectedOption} onChange={handleOptionChange}>
