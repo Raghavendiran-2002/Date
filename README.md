@@ -106,16 +106,15 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
    ```
-3. Navigate to Project Directory
+2. Navigate to Project Directory
    ```
    cd november-2023-hiring-Raghavendiran-2002/
    ```
-4. Start the Application
+3. Start the Application
    ```
    sudo docker-compose up
    ```
@@ -126,11 +125,36 @@ To get a local copy up and running follow these simple example steps.
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+## API Documentation
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```http
+GET /query-interface?search=r&filter=level
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+| Parameter | Type     | Description                        |
+| :-------- | :------- | :--------------------------------- |
+| `api_key` | `string` | **Required**. Your Gophish API key |
+
+##### Responses
+
+```javascript
+{
+  "logs": [],
+  "status": 200
+}
+```
+
+##### Status Codes
+
+Gophish returns the following status codes in its API:
+
+| Status Code | Description             |
+| :---------- | :---------------------- |
+| 200         | `OK`                    |
+| 201         | `CREATED`               |
+| 400         | `BAD REQUEST`           |
+| 404         | `NOT FOUND`             |
+| 500         | `INTERNAL SERVER ERROR` |
 
 <!-- ROADMAP -->
 
@@ -142,23 +166,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
   - [ ] Nested Feature
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -174,24 +181,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Raghavendrian N - raghavendiran46461@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- []()
-- []()
-- []()
+Project Link: [https://github.com/dyte-submissions/november-2023-hiring-Raghavendiran-2002](https://github.com/dyte-submissions/november-2023-hiring-Raghavendiran-2002)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
