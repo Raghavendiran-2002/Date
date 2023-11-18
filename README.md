@@ -79,8 +79,8 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 ### Built With
 
 - [![React][React.js]][React-url]
-- [![NodeJS][Vue.js]][NodeJS-url]
-- [![Python][Python.io]][Python-url]
+- [![NodeJS][Node.js]][NodeJS-url]
+- [![Python][Python]][Python-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -222,3 +222,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
+[Python-url]: https://img.shields.io/badge/Python-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Python]: https://www.python.org/
+[Node-url]: https://img.shields.io/badge/Node-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Node.js]: https://nodejs.org/en/
