@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://cdn-icons-png.flaticon.com/512/2620/2620995.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">LoggerX</h3>
