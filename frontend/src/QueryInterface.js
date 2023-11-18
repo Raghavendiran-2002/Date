@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./queryinterface.css";
+import "./Queryinterface.css";
 import LogTable from "./LogTable";
 
 const options = [
@@ -86,14 +86,14 @@ const QueryInterface = () => {
           />
           {datetime === true ? (
             <div>
-              <label>From:</label>
+              <label className="from">From :</label>
               <input
                 type="text"
                 value={startDate}
                 onChange={handleStartDateChange}
               />
               <br />
-              <label>To:</label>
+              <label className="to">To :</label>
               <input
                 type="text"
                 value={endDate}
