@@ -79,6 +79,12 @@ class DBManager:
         result = self.cursor.fetchall()
         return result
 
+    def search_spanId(self, spanId):
+        self.cursor.execute(
+            "SELECT * FROM log WHERE spanId LIKE '%{0}%'; ".format(spanId))
+        result = self.cursor.fetchall()
+        return result
+
     def search_commit(self, commit):
         self.cursor.execute(
             "SELECT * FROM log WHERE commit LIKE '%{0}%'; ".format(commit))
@@ -96,13 +102,9 @@ server = Flask(__name__)
 CORS(server)
 conn = None
 
-# if not conn:
-#     conn = DBManager(password_file='/run/secrets/db-password')
-#     conn.create_db()
-
 
 @server.route('/')
-def test():
+def initDB():
     global conn
     if not conn:
         conn = DBManager(password_file='/run/secrets/db-password')
@@ -117,7 +119,8 @@ def logIngestor():
     if not conn:
         conn = DBManager(password_file='/run/secrets/db-password')
     conn.insert_log(request_data)
-    return "Log Ingestor"
+    response = {"status": 200, "message": "Inserted Successfully"}
+    return jsonify(response)
 
 
 @server.route('/query-interface', methods=['GET'])
@@ -126,10 +129,7 @@ def queryInterface():
     if not conn:
         conn = DBManager(password_file='/run/secrets/db-password')
     print(request.args)
-    # print(request.args.getlist("start")[0])
-    # print(request.args.getlist("end")[0])
     if (request.args.getlist("filter")[0] == "timestamp"):
-        # print('******')
         logs = conn.search_timestamp(request.args.getlist(
             "start")[0], request.args.getlist("end")[0])
     else:
