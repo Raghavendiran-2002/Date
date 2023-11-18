@@ -5,33 +5,23 @@ import datetime
 from flask import request
 from flask_cors import CORS
 
-# PASSWORD = "db-78n9n"
-
 
 class DBManager:
-    def __init__(self, database='dyte', host="db", user="root", password_file=None):
-        pf = open(password_file, 'r')
+    def __init__(self, database='dyte', host="localhost", user="root", password="honda4104"):
+        # pf = open(password_file, 'r')
         self.connection = mysql.connector.connect(
             user=user,
-            password=pf.read(),
+            password=password,
             host=host,
             database=database,
-            auth_plugin='mysql_native_password'
         )
-        pf.close()
+        # pf.close()
         self.cursor = self.connection.cursor()
 
     def create_db(self):
         self.cursor.execute(
-            'CREATE TABLE IF NOT EXISTS log (level VARCHAR(25), message VARCHAR(255), resourceId VARCHAR(50), timestamp TIMESTAMP, traceId VARCHAR(50), spanId VARCHAR(50), commit VARCHAR(50), parentResourceId VARCHAR(50));')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(level);')
+            'CREATE TABLE IF NOT EXISTS log (level VARCHAR(25), message VARCHAR(255), resourceId VARCHAR(50), timestamp TIMESTAMP, traceId VARCHAR(30), spanId VARCHAR(30), commit VARCHAR(30), parentResourceId VARCHAR(40));')
         self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(resourceId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(traceId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(spanId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(commit);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(parentResourceId);')
-        self.connection.commit()
 
     def insert_log(self, request_data):
         level = request_data['level']
@@ -43,12 +33,14 @@ class DBManager:
         spanId = request_data['spanId']
         commit = request_data['commit']
         parentResourceId = request_data['metadata']['parentResourceId']
+        print("Working")
+        print(type(timestamp))
         self.cursor.execute('INSERT INTO log (level, message , resourceId,timestamp,traceId,spanId,commit,parentResourceId) VALUES ("{0}", "{1}", "{2}","{3}", "{4}", "{5}", "{6}" , "{7}");'.format(
             level, message, resourceId, timestamp, traceId, spanId, commit, parentResourceId))
         self.connection.commit()
 
     def query_titles(self):
-        self.cursor.execute('SELECT message FROM log;')
+        self.cursor.execute('SELECT message FROM log')
         rec = []
         for c in self.cursor:
             rec.append(c[0])
@@ -57,7 +49,7 @@ class DBManager:
     def search_level(self, level):
         self.cursor.execute(
 
-            "SELECT * FROM log WHERE MATCH(level) AGAINST('{0}');".format(level))
+            "SELECT * FROM log WHERE MATCH(message) AGAINST('{0}');".format(level))
         result = self.cursor.fetchall()
         return result
         # for x in result:
@@ -65,37 +57,37 @@ class DBManager:
 
     def search_message(self, message):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(message) AGAINST('{0}');".format(message))
+            "SELECT * FROM log WHERE message LIKE '%{0}%' ".format(message))
         result = self.cursor.fetchall()
         return result
 
     def search_resourceId(self, resourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(resourceId) AGAINST('{0}');".format(resourceId))
+            "SELECT * FROM log WHERE resourceId LIKE '%{0}%' ".format(resourceId))
         result = self.cursor.fetchall()
         return result
 
     def search_timestamp(self, timestamp):
         self.cursor.execute(
-            "SELECT * FROM log WHERE timestamp >= '2023-09-09' and timestamp < '2023-10-01';".format(timestamp))
+            "SELECT * FROM log WHERE timestamp LIKE '%{0}%' ".format(timestamp))
         result = self.cursor.fetchall()
         return result
 
     def search_traceId(self, traceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(traceId) AGAINST('{0}'); ".format(traceId))
+            "SELECT * FROM log WHERE traceId LIKE '%{0}%' ".format(traceId))
         result = self.cursor.fetchall()
         return result
 
     def search_commit(self, commit):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(commit) AGAINST('{0}'); ".format(commit))
+            "SELECT * FROM log WHERE commit LIKE '%{0}%' ".format(commit))
         result = self.cursor.fetchall()
         return result
 
     def search_parentResourceId(self, parentResourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(parentResourceId) AGAINST('{0}'); ".format(parentResourceId))
+            "SELECT * FROM log WHERE parentResourceId LIKE '%{0}%' ".format(parentResourceId))
         result = self.cursor.fetchall()
         return result
 
@@ -103,10 +95,6 @@ class DBManager:
 server = Flask(__name__)
 CORS(server)
 conn = None
-
-if not conn:
-    conn = DBManager(password_file='/run/secrets/db-password')
-    conn.create_db()
 
 
 @server.route('/')
@@ -119,8 +107,10 @@ def logIngestor():
     request_data = request.get_json()
     global conn
     if not conn:
-        conn = DBManager(password_file='/run/secrets/db-password')
+        conn = DBManager(password="honda4104")
+        conn.create_db()
     conn.insert_log(request_data)
+    print("********************* INSERTED *************************")
     return "Log Ingestor"
 
 
@@ -128,7 +118,7 @@ def logIngestor():
 def queryInterface():
     global conn
     if not conn:
-        conn = DBManager(password_file='/run/secrets/db-password')
+        conn = DBManager(password="honda4104")
     print(request.args.getlist("search")[0])
     if (request.args.getlist("search")[0] == ""):
         return {"status": 200, "message": "search field Empty"}
