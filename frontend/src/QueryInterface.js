@@ -45,8 +45,16 @@ const QueryInterface = () => {
       alert("Select any option !");
       return;
     }
-    if (searchTerm === "") {
+    if (!datetime && searchTerm === "") {
       alert("Enter Search Term !");
+      return;
+    }
+    if (datetime && startDate === "") {
+      alert("Enter Start date !");
+      return;
+    }
+    if (datetime && endDate === "") {
+      alert("Enter End date !");
       return;
     }
     console.log(startDate + " : " + endDate);
@@ -86,18 +94,23 @@ const QueryInterface = () => {
               </option>
             ))}
           </select>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+          {datetime ? (
+            <p></p>
+          ) : (
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          )}
           {datetime === true ? (
             <div>
               <label className="from">From :</label>
               <input
                 type="text"
                 value={startDate}
+                placeholder="2023-09-15T08:00:00Z"
                 onChange={handleStartDateChange}
               />
               <br />
@@ -105,6 +118,7 @@ const QueryInterface = () => {
               <input
                 type="text"
                 value={endDate}
+                placeholder="2023-09-15T08:00:00Z"
                 onChange={handleEndDateChange}
               />
             </div>
