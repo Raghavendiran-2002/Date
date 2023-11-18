@@ -102,14 +102,41 @@ To get a local copy up and running follow these simple example steps.
 
 View Console :
 
-```http
+```
 http://localhost:3001
 ```
 
 View CLI :
 
-```http
+```
 http://localhost:3000
+```
+
+### Using CURL
+
+```curl
+curl -X GET http://localhost:3000/query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T08:00:00Z
+```
+
+```
+curl -X GET http://localhost:3000/query-interface?search=12&filter=resourceId
+```
+
+```
+curl -X POST http://localhost:3000/log-ingestor
+   -H 'Content-Type: application/json'
+   -d '{
+	"level": "error",
+	"message": "Failed to connect to DB",
+    "resourceId": "server-1234",
+	"timestamp": "2023-09-15T08:00:00Z",
+	"traceId": "abc-xyz-123",
+    "spanId": "span-456",
+    "commit": "5e5342f",
+    "metadata": {
+        "parentResourceId": "server-0987"
+    }
+}'
 ```
 
 ## API Documentation

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Queryinterface.css";
+import "./QueryInterface.css";
 import LogTable from "./LogTable";
 
 const options = [
@@ -41,7 +41,15 @@ const QueryInterface = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(startDate + " : " + endDate);
+    if (selectedOption === "") {
+      alert("Select any option !");
+      return;
+    }
+    if (searchTerm === "") {
+      alert("Enter Search Term !");
+      return;
+    }
+    console.log(startDate + " : " + endDate);
     try {
       var response = "";
       if (selectedOption === "timestamp") {
@@ -93,7 +101,7 @@ const QueryInterface = () => {
                 onChange={handleStartDateChange}
               />
               <br />
-              <label className="to">To :</label>
+              <label className="to">To &nbsp;&nbsp;:</label>
               <input
                 type="text"
                 value={endDate}
