@@ -108,25 +108,62 @@ To get a local copy up and running follow these simple example steps.
 GET /query-interface?search=r&filter=level
 ```
 
-| Parameter | Type     | Description   |
-| :-------- | :------- | :------------ |
-| `search`  | `string` | **Required**. |
-| `filter`  | `string` | **Required**. |
+| Parameter | Type     | Description                                                                                       |
+| :-------- | :------- | :------------------------------------------------------------------------------------------------ |
+| `search`  | `string` | **Required**. string to be search                                                                 |
+| `filter`  | `string` | **Required**. ["level","message", "resourceId", "traceId", "spanId", "commit","parentResourceId"] |
 
-**filter**
+### Responses
 
-- level
-- message
-- resourceId
-- traceId
-- spanId
-- commit
-- parentResourceId
+```javascript
+{
+  "logs": [],
+  "status": 200
+}
+```
 
-**search**
-"" search string
+```
+GET /query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T08:00:00Z
+```
 
-##### Responses
+| Parameter | Type     | Description                                   |
+| :-------- | :------- | :-------------------------------------------- |
+| `start`   | `string` | **Required**. DateTime "2023-09-15T08:00:00Z" |
+| `end`     | `string` | **Required**. DateTime "2023-09-15T08:00:00Z" |
+| `filter`  | `string` | **Required**. ["timestamp"]                   |
+
+### Responses
+
+```javascript
+{
+  "logs": [],
+  "status": 200
+}
+```
+
+```http
+POST /log-ingestor
+
+```
+
+| Parameter | Type   | Description      |
+| :-------- | :----- | :--------------- |
+| `body`    | `JSON` | **Required**. {{ |
+
+    "level": "error",
+    "message": "Failed to connect to DB",
+    "resourceId": "server-1234",
+    "timestamp": "2023-09-15T08:00:00Z",
+    "traceId": "abc-xyz-123",
+    "spanId": "span-456",
+    "commit": "5e5342f",
+    "metadata": {
+        "parentResourceId": "server-0987"
+    }
+
+}} |
+
+### Responses
 
 ```javascript
 {
