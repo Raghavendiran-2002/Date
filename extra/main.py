@@ -20,8 +20,16 @@ class DBManager:
 
     def create_db(self):
         self.cursor.execute(
-            'CREATE TABLE IF NOT EXISTS log (level VARCHAR(25), message VARCHAR(255), resourceId VARCHAR(50), timestamp TIMESTAMP, traceId VARCHAR(30), spanId VARCHAR(30), commit VARCHAR(30), parentResourceId VARCHAR(40));')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
+            'CREATE TABLE IF NOT EXISTS log (level VARCHAR(25), message VARCHAR(255), resourceId VARCHAR(50), timestamp TIMESTAMP, traceId VARCHAR(30), spanId VARCHAR(30), commit VARCHAR(30), parentResourceId VARCHAR(40), FULLTEXT(level, message, resourceId,traceId,spanId,commit,parentResourceId));')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(level);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(resourceId);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(traceId);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(spanId);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(commit);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(parentResourceId);')
+        self.connection.commit()
 
     def insert_log(self, request_data):
         level = request_data['level']
@@ -40,7 +48,7 @@ class DBManager:
         self.connection.commit()
 
     def query_titles(self):
-        self.cursor.execute('SELECT message FROM log')
+        self.cursor.execute('SELECT message FROM log;')
         rec = []
         for c in self.cursor:
             rec.append(c[0])
@@ -49,7 +57,7 @@ class DBManager:
     def search_level(self, level):
         self.cursor.execute(
 
-            "SELECT * FROM log WHERE MATCH(message) AGAINST('{0}');".format(level))
+            "SELECT * FROM log WHERE MATCH(level) AGAINST('{0}');".format(level))
         result = self.cursor.fetchall()
         return result
         # for x in result:
@@ -57,37 +65,37 @@ class DBManager:
 
     def search_message(self, message):
         self.cursor.execute(
-            "SELECT * FROM log WHERE message LIKE '%{0}%' ".format(message))
+            "SELECT * FROM log WHERE MATCH(message) AGAINST('{0}'); ".format(message))
         result = self.cursor.fetchall()
         return result
 
     def search_resourceId(self, resourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE resourceId LIKE '%{0}%' ".format(resourceId))
+            "SELECT * FROM log WHERE MATCH(resourceId) AGAINST('{0}'); ".format(resourceId))
         result = self.cursor.fetchall()
         return result
 
     def search_timestamp(self, timestamp):
         self.cursor.execute(
-            "SELECT * FROM log WHERE timestamp LIKE '%{0}%' ".format(timestamp))
+            "SELECT * FROM log WHERE timestamp >= '2023-09-09' and timestamp < '2023-10-01';".format(timestamp))
         result = self.cursor.fetchall()
         return result
 
     def search_traceId(self, traceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE traceId LIKE '%{0}%' ".format(traceId))
+            "SELECT * FROM log WHERE MATCH(traceId) AGAINST('{0}'); ".format(traceId))
         result = self.cursor.fetchall()
         return result
 
     def search_commit(self, commit):
         self.cursor.execute(
-            "SELECT * FROM log WHERE commit LIKE '%{0}%' ".format(commit))
+            "SELECT * FROM log WHERE MATCH(commit) AGAINST('{0}');".format(commit))
         result = self.cursor.fetchall()
         return result
 
     def search_parentResourceId(self, parentResourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE parentResourceId LIKE '%{0}%' ".format(parentResourceId))
+            "SELECT * FROM log WHERE MATCH(parentResourceId) AGAINST('{0}'); ".format(parentResourceId))
         result = self.cursor.fetchall()
         return result
 

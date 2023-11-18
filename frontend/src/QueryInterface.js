@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./queryinterface.css";
 import LogTable from "./LogTable";
+import DatePicker from "react-datepicker";
 
 const options = [
   "level",
@@ -14,26 +15,47 @@ const options = [
   "parentResourceId",
 ];
 const QueryInterface = () => {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [getlog, setData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [datetime, setDateTime] = useState(false);
   const handleOptionChange = (e) => {
+    if (e.target.value === "timestamp") setDateTime(true);
+    else {
+      setDateTime(false);
+    }
     setSelectedOption(e.target.value);
   };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(startDate + " : " + endDate);
     try {
-      const response = await axios({
-        method: "get",
-        url: `http://localhost:3000/query-interface?search=${searchTerm}&filter=${selectedOption}`,
-      });
-      console.log(response.data.logs);
-      console.log("WOrking");
+      var response = "";
+      if (selectedOption === "timestamp") {
+        response = await axios({
+          method: "get",
+          url: `http://localhost:3000/query-interface?filter=${selectedOption}&start=${startDate}&end=${endDate}`,
+        });
+      } else {
+        response = await axios({
+          method: "get",
+          url: `http://localhost:3000/query-interface?search=${searchTerm}&filter=${selectedOption}`,
+        });
+      }
       setData(response.data.logs);
       getlog.map((logz, index) => {
         console.log(logz[0]);
@@ -63,6 +85,25 @@ const QueryInterface = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
+          {datetime === true ? (
+            <div>
+              <label>From:</label>
+              <input
+                type="text"
+                value={startDate}
+                onChange={handleStartDateChange}
+              />
+              <br />
+              <label>To:</label>
+              <input
+                type="text"
+                value={endDate}
+                onChange={handleEndDateChange}
+              />
+            </div>
+          ) : (
+            <p></p>
+          )}
           <button type="submit">Submit</button>
         </form>
       </div>

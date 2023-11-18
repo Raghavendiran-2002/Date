@@ -24,13 +24,7 @@ class DBManager:
     def create_db(self):
         self.cursor.execute(
             'CREATE TABLE IF NOT EXISTS log (level VARCHAR(25), message VARCHAR(255), resourceId VARCHAR(50), timestamp TIMESTAMP, traceId VARCHAR(50), spanId VARCHAR(50), commit VARCHAR(50), parentResourceId VARCHAR(50));')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(level);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(resourceId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(traceId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(spanId);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(commit);')
-        self.cursor.execute('ALTER TABLE log ADD FULLTEXT(parentResourceId);')
+        # self.cursor.execute('ALTER TABLE log ADD FULLTEXT(message);')
         self.connection.commit()
 
     def insert_log(self, request_data):
@@ -55,47 +49,45 @@ class DBManager:
         return rec
 
     def search_level(self, level):
+        # SELECT * FROM log WHERE MATCH(level) AGAINST('{0}');
         self.cursor.execute(
-
-            "SELECT * FROM log WHERE MATCH(level) AGAINST('{0}');".format(level))
+            "SELECT * FROM log WHERE level LIKE '%{0}%';".format(level))
         result = self.cursor.fetchall()
         return result
-        # for x in result:
-        # print(x)
 
     def search_message(self, message):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(message) AGAINST('{0}');".format(message))
+            "SELECT * FROM log WHERE message LIKE '%{0}%';".format(message))
         result = self.cursor.fetchall()
         return result
 
     def search_resourceId(self, resourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(resourceId) AGAINST('{0}');".format(resourceId))
+            "SELECT * FROM log WHERE resourceId LIKE '%{0}%';".format(resourceId))
         result = self.cursor.fetchall()
         return result
 
-    def search_timestamp(self, timestamp):
+    def search_timestamp(self, start, end):
         self.cursor.execute(
-            "SELECT * FROM log WHERE timestamp >= '2023-09-09' and timestamp < '2023-10-01';".format(timestamp))
+            "SELECT * FROM log WHERE timestamp >= '{0}' and timestamp < '{1}';".format(start, end))
         result = self.cursor.fetchall()
         return result
 
     def search_traceId(self, traceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(traceId) AGAINST('{0}'); ".format(traceId))
+            "SELECT * FROM log WHERE traceId LIKE '%{0}%'; ".format(traceId))
         result = self.cursor.fetchall()
         return result
 
     def search_commit(self, commit):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(commit) AGAINST('{0}'); ".format(commit))
+            "SELECT * FROM log WHERE commit LIKE '%{0}%'; ".format(commit))
         result = self.cursor.fetchall()
         return result
 
     def search_parentResourceId(self, parentResourceId):
         self.cursor.execute(
-            "SELECT * FROM log WHERE MATCH(parentResourceId) AGAINST('{0}'); ".format(parentResourceId))
+            "SELECT * FROM log WHERE parentResourceId LIKE '%{0}%'; ".format(parentResourceId))
         result = self.cursor.fetchall()
         return result
 
@@ -104,13 +96,17 @@ server = Flask(__name__)
 CORS(server)
 conn = None
 
-if not conn:
-    conn = DBManager(password_file='/run/secrets/db-password')
-    conn.create_db()
+# if not conn:
+#     conn = DBManager(password_file='/run/secrets/db-password')
+#     conn.create_db()
 
 
 @server.route('/')
 def test():
+    global conn
+    if not conn:
+        conn = DBManager(password_file='/run/secrets/db-password')
+        conn.create_db()
     return "Started 🚀"
 
 
@@ -129,25 +125,32 @@ def queryInterface():
     global conn
     if not conn:
         conn = DBManager(password_file='/run/secrets/db-password')
-    print(request.args.getlist("search")[0])
-    if (request.args.getlist("search")[0] == ""):
-        return {"status": 200, "message": "search field Empty"}
-    if (request.args.getlist("filter")[0] == "level"):
-        logs = conn.search_level(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "message"):
-        logs = conn.search_message(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "resourceId"):
-        logs = conn.search_resourceId(request.args.getlist("search")[0])
+    print(request.args)
+    # print(request.args.getlist("start")[0])
+    # print(request.args.getlist("end")[0])
     if (request.args.getlist("filter")[0] == "timestamp"):
-        logs = conn.search_timestamp(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "traceId"):
-        logs = conn.search_traceId(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "spanId"):
-        logs = conn.search_spanId(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "commit"):
-        logs = conn.search_commit(request.args.getlist("search")[0])
-    if (request.args.getlist("filter")[0] == "parentResourceId"):
-        logs = conn.search_parentResourceId(request.args.getlist("search")[0])
+        # print('******')
+        logs = conn.search_timestamp(request.args.getlist(
+            "start")[0], request.args.getlist("end")[0])
+    else:
+        if (request.args.getlist("search")[0] == ""):
+            return {"status": 200, "message": "search field Empty"}
+        if (request.args.getlist("filter")[0] == "level"):
+            logs = conn.search_level(request.args.getlist("search")[0])
+        if (request.args.getlist("filter")[0] == "message"):
+            logs = conn.search_message(request.args.getlist("search")[0])
+        if (request.args.getlist("filter")[0] == "resourceId"):
+            logs = conn.search_resourceId(request.args.getlist("search")[0])
+
+        if (request.args.getlist("filter")[0] == "traceId"):
+            logs = conn.search_traceId(request.args.getlist("search")[0])
+        if (request.args.getlist("filter")[0] == "spanId"):
+            logs = conn.search_spanId(request.args.getlist("search")[0])
+        if (request.args.getlist("filter")[0] == "commit"):
+            logs = conn.search_commit(request.args.getlist("search")[0])
+        if (request.args.getlist("filter")[0] == "parentResourceId"):
+            logs = conn.search_parentResourceId(
+                request.args.getlist("search")[0])
     response = {"status": 200, "logs": logs}
     return jsonify(response)
 
