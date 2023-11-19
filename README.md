@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/dyte-submissions/november-2023-hiring-Raghavendiran-2002">
-    <img src="https://cdn-icons-png.flaticon.com/512/2620/2620995.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">LoggerX</h3>
@@ -104,6 +104,12 @@ http://localhost:3000
 
 ### Using CURL
 
+Fetch all Logs
+
+```curl
+curl -X GET http://localhost:3000/fetch-all-logs
+```
+
 Fetch Logs
 
 ```curl
@@ -164,6 +170,21 @@ GET /query-interface?filter=timestamp&start=2023-09-15T08:00:00Z&end=2023-11-15T
 | `start`   | `string` | **Required**. DateTime "2023-09-15T08:00:00Z" |
 | `end`     | `string` | **Required**. DateTime "2023-09-15T08:00:00Z" |
 | `filter`  | `string` | **Required**. ["timestamp"]                   |
+
+Responses
+
+```javascript
+{
+  "logs": [],
+  "status": 200
+}
+```
+
+### Fetch All Logs
+
+```http
+GET /fetch-all-logs
+```
 
 Responses
 

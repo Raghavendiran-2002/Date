@@ -1,19 +1,9 @@
-import React from "react";
+import { useState } from "react";
 import "./LogTable.css";
 
 const LogTable = ({ errorData }) => {
   const renderTable = () => {
     return errorData.map((log, index) => {
-      // const {
-      //   level,
-      //   message,
-      //   resourceId,
-      //   timestamp,
-      //   traceId,
-      //   spanId,
-      //   commit,
-      //   parentResourceId,
-      // } = log;
       return (
         <tr key={log[0]}>
           <td>{log[0]}</td>
@@ -28,6 +18,7 @@ const LogTable = ({ errorData }) => {
       );
     });
   };
+
   return (
     <div className="error-table">
       <table>

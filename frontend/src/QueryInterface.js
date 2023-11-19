@@ -13,6 +13,7 @@ const options = [
   "commit",
   "parentResourceId",
 ];
+const users = ["admin", "customer"];
 const QueryInterface = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -20,12 +21,17 @@ const QueryInterface = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [datetime, setDateTime] = useState(false);
+  const [user, setUser] = useState("admin");
   const handleOptionChange = (e) => {
     if (e.target.value === "timestamp") setDateTime(true);
     else {
       setDateTime(false);
     }
     setSelectedOption(e.target.value);
+  };
+
+  const handleUserChange = (e) => {
+    setUser(e.target.value);
   };
 
   const handleSearchChange = (e) => {
@@ -41,6 +47,7 @@ const QueryInterface = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(user);
     if (selectedOption === "") {
       alert("Select any option !");
       return;
@@ -57,28 +64,23 @@ const QueryInterface = () => {
       alert("Enter End date !");
       return;
     }
-    console.log(startDate + " : " + endDate);
     try {
       var response = "";
       if (selectedOption === "timestamp") {
         response = await axios({
           method: "get",
-          url: `http://localhost:3000/query-interface?filter=${selectedOption}&start=${startDate}&end=${endDate}`,
+          url: `http://localhost:3000/query-interface?filter=${selectedOption}&start=${startDate}&end=${endDate}&user=${user}`,
         });
       } else {
         response = await axios({
           method: "get",
-          url: `http://localhost:3000/query-interface?search=${searchTerm}&filter=${selectedOption}`,
+          url: `http://localhost:3000/query-interface?search=${searchTerm}&filter=${selectedOption}&user=${user}`,
         });
       }
       setData(response.data.logs);
-      getlog.map((logz, index) => {
-        console.log(logz[0]);
-      });
-      console.log(getlog);
-      // console.log(response.data.logs[0][3]);
     } catch (error) {
       console.error("API Error:", error);
+      alert("API Error:", error);
     }
   };
 
@@ -91,14 +93,22 @@ const QueryInterface = () => {
 
       <div className="searchcontiner">
         <form onSubmit={handleSubmit}>
+          {/* <select value={user} onChange={handleUserChange}>
+            {users.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select> */}
           <select value={selectedOption} onChange={handleOptionChange}>
-            <option value="">Select an option</option>
+            <option value="">Select an option to be searched</option>
             {options.map((option, index) => (
               <option key={index} value={option}>
                 {option}
               </option>
             ))}
           </select>
+
           {datetime ? (
             <p></p>
           ) : (
